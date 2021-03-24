@@ -80,6 +80,9 @@ void __appExit(void)
     timeExit();
     fsdevUnmountAll();
     fsExit();
+    smInitialize();
+    spsmInitialize();
+    spsmShutdown(true);
 }
 
 static loop_status_t loop(loop_status_t (*callback)(void))

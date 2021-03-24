@@ -88,6 +88,7 @@ FTP_DECLARE(PASV);
 FTP_DECLARE(PORT);
 FTP_DECLARE(PWD);
 FTP_DECLARE(QUIT);
+FTP_DECLARE(REB);
 FTP_DECLARE(REST);
 FTP_DECLARE(RETR);
 FTP_DECLARE(RMD);
@@ -224,6 +225,7 @@ static ftp_command_t ftp_commands[] =
         FTP_COMMAND(PORT),
         FTP_COMMAND(PWD),
         FTP_COMMAND(QUIT),
+        FTP_COMMAND(REB),
         FTP_COMMAND(REST),
         FTP_COMMAND(RETR),
         FTP_COMMAND(RMD),
@@ -284,6 +286,8 @@ static aptHookCookie cookie;
 
 /*! appletHook cookie */
 static AppletHookCookie cookie;
+/*! reboot switch command received */
+static bool reboot = false;
 #endif
 
 /*! server listen address */
@@ -2108,7 +2112,9 @@ ftp_loop(void)
         apt_hook(APTHOOK_ONRESTORE, NULL);
     }
 #elif defined(__SWITCH__)
-        /* check if the user wants to exit */
+    /* check if the user wants to exit */
+    if (reboot)
+        return LOOP_EXIT;
 #endif
 
     return LOOP_CONTINUE;
@@ -3041,8 +3047,8 @@ FTP_DECLARE(HELP)
     ftp_send_response(session, -214,
                       "The following commands are recognized\r\n"
                       " ABOR ALLO APPE CDUP CWD DELE FEAT HELP LIST MDTM MKD MLSD MLST MODE\r\n"
-                      " NLST NOOP OPTS PASS PASV PORT PWD QUIT REST RETR RMD RNFR RNTO STAT\r\n"
-                      " STOR STOU STRU SYST TYPE USER XCUP XCWD XMKD XPWD XRMD\r\n"
+                      " NLST NOOP OPTS PASS PASV PORT PWD QUIT REB REST RETR RMD RNFR RNTO\r\n"
+                      " STAT STOR STOU STRU SYST TYPE USER XCUP XCWD XMKD XPWD XRMD\r\n"
                       "214 End\r\n");
 }
 
@@ -3686,6 +3692,23 @@ FTP_DECLARE(QUIT)
     /* disconnect from the client */
     ftp_send_response(session, 221, "disconnecting\r\n");
     ftp_session_close_cmd(session);
+}
+
+/*! @fn static void REB(ftp_session_t *session, const char *args)
+ *
+ *  @brief terminate ftp session and restart the console
+ *
+ *  @param[in] session ftp session
+ *  @param[in] args    arguments
+ */
+FTP_DECLARE(REB)
+{
+    console_print(CYAN "%s %s\n" RESET, __func__, args ? args : "");
+
+    /* disconnect from the client */
+    ftp_send_response(session, 221, "disconnecting\r\n");
+    ftp_session_close_cmd(session);
+    reboot = true;
 }
 
 /*! @fn static void REST(ftp_session_t *session, const char *args)
