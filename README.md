@@ -1,6 +1,6 @@
 # sys-ftpd
 
-This is a nintendo-switch sysmodule which runs an ftpd-server in the background. This fork adds a custom `REB` FTP command that reboots the console.
+This is a nintendo-switch sysmodule which runs an ftpd-server in the background. This fork adds a custom `REB` FTP command that reboots the console. Uses the same TitleID as the original version.
 
 Hotkeys:  
 You can toggle the state of the server using the (+) + (-) + (X) button combination.
