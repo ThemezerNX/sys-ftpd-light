@@ -6,6 +6,10 @@
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "files.associations": {
+        "*.vue": "vue",
+        "*.avr": "avr",
+        "*.asm": "avr",
+        "*.sh": "shellscript",
         "__locale": "c",
         "stdlib.h": "c",
         "inet.h": "c",
@@ -22,6 +26,8 @@
         "ios": "c",
         "ftp.h": "c",
         "util.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "*.tcc": "c",
+        "algorithm": "c"
     }
 }

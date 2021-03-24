@@ -1,10 +1,9 @@
 # sys-ftpd
 
-This is a nintendo-switch sysmodule which runs an ftpd-server in the background (on port 5000 with no auth).
+This is a nintendo-switch sysmodule which runs an ftpd-server in the background. This fork adds a custom `REB` FTP command that reboots the console.
 
-The key difference between sys-ftpd-light and [sys-ftpd](https://github.com/jakibaki/sys-ftpd) is that it applies a lot of changes to significantly reduce memory usage (from ~7MB to ~1MB). This includes removing all sound effects and reducing the buffer size reserved for the ftpd server.
-
-Hotkeys: To help with security while there is are no login credentials, debugging, or otherwise, you can toggle the state of the server using the (+) + (-) + (X) button combination.
+Hotkeys:  
+You can toggle the state of the server using the (+) + (-) + (X) button combination.
 
 ---
 
@@ -12,12 +11,12 @@ Config Example (Located on your sd in `sdmc:/config/sys-ftpd/config.ini`):
 
 ```
 [User]
-user:=ftpd
+user:=nxthemer
 
 # user:= -> Login username
 
 [Password]
-password:=12345
+password:=nxthemer
 
 # password:= -> Login password
 
